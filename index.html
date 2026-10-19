@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DiskOS — Disk Scheduling Algorithm Visualizer</title>
+  <meta name="description" content="Interactive disk scheduling algorithm visualizer for Operating Systems. Explore FCFS, SSTF, SCAN, C-SCAN, LOOK, C-LOOK with real-time animated simulations." />
+  <meta name="keywords" content="disk scheduling, operating systems, FCFS, SSTF, SCAN, C-SCAN, LOOK, C-LOOK, visualizer, OS project" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header id="header" class="header">
+    <div class="container header-inner">
+      <a href="#home" class="logo">
+        <div class="logo-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="14" stroke="#2563EB" stroke-width="2" fill="white"/>
+            <circle cx="16" cy="16" r="9" stroke="#2563EB" stroke-width="1.5" fill="none"/>
+            <circle cx="16" cy="16" r="4" stroke="#06B6D4" stroke-width="1.5" fill="none"/>
+            <circle cx="16" cy="16" r="2" fill="#2563EB"/>
+            <line x1="16" y1="16" x2="28" y2="10" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="28" cy="10" r="2" fill="#06B6D4"/>
+          </svg>
+        </div>
+        <span class="logo-text">Disk<span class="logo-accent">OS</span></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#algorithms" class="nav-link">Algorithms</a>
+        <a href="#simulator" class="nav-link">Simulator</a>
+        <a href="#compare" class="nav-link">Compare</a>
+        <a href="#learn" class="nav-link">Learn</a>
+        <a href="#about" class="nav-link">About</a>
+      </nav>
+      <a href="#simulator" class="btn btn-primary header-cta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Launch Simulator
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section id="home" class="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Operating Systems — Interactive Visualizer
+        </div>
+        <h1 class="hero-title">
+          Disk Scheduling<br/>
+          <span class="gradient-text">Algorithm</span><br/>
+          Visualizer
+        </h1>
+        <p class="hero-subtitle">
+          Understand how operating systems schedule disk requests through 
+          interactive simulations and real-time performance comparisons.
+        </p>
+        <div class="hero-actions">
+          <a href="#simulator" class="btn btn-primary btn-lg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Start Simulation
+          </a>
+          <a href="#algorithms" class="btn btn-outline btn-lg">
+            Explore Algorithms
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="stat-num">6</span>
+            <span class="stat-label">Algorithms</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-num">∞</span>
+            <span class="stat-label">Request Queues</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-num">Live</span>
+            <span class="stat-label">Animation</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hdd-wrapper">
+          <img src="hdd.jpg" alt="Hard Disk Drive illustration showing concentric tracks and actuator arm" class="hdd-image" />
+          <div class="hdd-floating hdd-float-1">
+            <span class="float-label">Cylinder 53</span>
+            <span class="float-badge current">HEAD</span>
+          </div>
+          <div class="hdd-floating hdd-float-2">
+            <span class="float-label">Queue: 8 requests</span>
+          </div>
+          <div class="hdd-floating hdd-float-3">
+            <span class="float-label">Seek: 236 moves</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature cards -->
+    <div class="container">
+      <div class="feature-cards">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div>
+            <h3 class="feature-title">6 Scheduling Policies</h3>
+            <p class="feature-desc">FCFS, SSTF, SCAN, C-SCAN, LOOK &amp; C-LOOK</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <h3 class="feature-title">Live Disk Movement</h3>
+            <p class="feature-desc">Animated seek path with speed controls and step mode</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div>
+            <h3 class="feature-title">Instant Performance Analysis</h3>
+            <p class="feature-desc">Total seek time, average seek, and comparison charts</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ALGORITHMS ===== -->
+  <section id="algorithms" class="section section-grey">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Core Algorithms</div>
+        <h2 class="section-title">6 Disk Scheduling Algorithms</h2>
+        <p class="section-subtitle">From classic FCFS to the efficient LOOK family — explore every major approach used in modern operating systems.</p>
+      </div>
+      <div class="algo-grid" id="algo-grid">
+        <!-- Algorithm cards injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SIMULATOR ===== -->
+  <section id="simulator" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Interactive Tool</div>
+        <h2 class="section-title">Disk Scheduling Simulator</h2>
+        <p class="section-subtitle">Configure your disk parameters, choose an algorithm, and watch the head movement animate in real-time.</p>
+      </div>
+
+      <div class="simulator-layout">
+        <!-- Control Panel -->
+        <div class="sim-panel">
+          <div class="panel-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07M4.93 4.93a10 10 0 0 0 0 14.14M8.46 8.46a5 5 0 0 0 0 7.07"/></svg>
+            Configuration
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="requestQueue">
+              Disk Request Queue
+              <span class="label-hint">comma-separated cylinder numbers</span>
+            </label>
+            <input type="text" id="requestQueue" class="form-input" value="98, 183, 37, 122, 14, 124, 65, 67" placeholder="e.g. 98, 183, 37, 122, 14, 124, 65, 67" />
+            <div class="input-error" id="queueError"></div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="headPosition">Initial Head Position</label>
+              <input type="number" id="headPosition" class="form-input" value="53" min="0" max="9999" placeholder="53" />
+              <div class="input-error" id="headError"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="minCylinder">Min Cylinder</label>
+              <input type="number" id="minCylinder" class="form-input" value="0" min="0" placeholder="0" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="maxCylinder">Max Cylinder</label>
+              <input type="number" id="maxCylinder" class="form-input" value="199" min="1" placeholder="199" />
+              <div class="input-error" id="cylError"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="direction">Initial Direction</label>
+              <select id="direction" class="form-input">
+                <option value="right">Right (Increasing)</option>
+                <option value="left">Left (Decreasing)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="algorithm">Algorithm</label>
+            <select id="algorithm" class="form-input">
+              <option value="fcfs">FCFS — First Come First Serve</option>
+              <option value="sstf">SSTF — Shortest Seek Time First</option>
+              <option value="scan">SCAN — Elevator Algorithm</option>
+              <option value="cscan">C-SCAN — Circular SCAN</option>
+              <option value="look">LOOK Algorithm</option>
+              <option value="clook">C-LOOK Algorithm</option>
+
+            </select>
+          </div>
+
+          <div class="speed-control">
+            <label class="form-label">Animation Speed</label>
+            <div class="speed-slider-wrap">
+              <span class="speed-label">Slow</span>
+              <input type="range" id="speedControl" class="speed-slider" min="1" max="5" value="3" />
+              <span class="speed-label">Fast</span>
+            </div>
+          </div>
+
+          <div class="sim-actions">
+            <button class="btn btn-primary" id="runBtn" onclick="runSimulation()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Run Simulation
+            </button>
+            <button class="btn btn-outline" id="resetBtn" onclick="resetSimulation()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              Reset
+            </button>
+            <button class="btn btn-ghost" onclick="loadExample()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Load Example
+            </button>
+            <button class="btn btn-cyan" onclick="compareAll()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              Compare All
+            </button>
+          </div>
+
+          <!-- Stats Panel -->
+          <div class="stats-panel" id="statsPanel" style="display:none;">
+            <div class="stats-title">Simulation Results</div>
+            <div class="stats-grid">
+              <div class="stat-box">
+                <span class="stat-box-label">Algorithm</span>
+                <span class="stat-box-val" id="statAlgo">—</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-box-label">Total Seek</span>
+                <span class="stat-box-val highlight" id="statTotal">—</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-box-label">Avg Seek</span>
+                <span class="stat-box-val" id="statAvg">—</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-box-label">Requests</span>
+                <span class="stat-box-val" id="statReqs">—</span>
+              </div>
+            </div>
+            <div class="service-order">
+              <span class="so-label">Service Order:</span>
+              <span class="so-val" id="statOrder">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visualization Canvas -->
+        <div class="sim-canvas-wrap">
+          <div class="canvas-header">
+            <div class="canvas-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Seek Path Visualization
+            </div>
+            <div class="canvas-controls" id="canvasControls" style="display:none;">
+              <button class="ctrl-btn" id="playPauseBtn" onclick="togglePlayPause()" title="Play/Pause">
+                <svg id="playIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <svg id="pauseIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+              </button>
+              <button class="ctrl-btn" id="restartBtn" onclick="restartAnimation()" title="Restart">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              </button>
+              <button class="ctrl-btn" id="stepBtn" onclick="stepAnimation()" title="Step Forward">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 15 12 5 21 5 3"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="canvas-container">
+            <canvas id="diskCanvas" width="700" height="420"></canvas>
+            <div class="canvas-placeholder" id="canvasPlaceholder">
+              <div class="placeholder-icon">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><line x1="12" y1="12" x2="20" y2="8"/></svg>
+              </div>
+              <p>Configure parameters and click <strong>Run Simulation</strong> to start</p>
+            </div>
+          </div>
+
+          <!-- Cylinder Info Bar -->
+          <div class="cyl-info-bar" id="cylInfoBar" style="display:none;">
+            <div class="cyl-info-item">
+              <span class="cyl-label">Current Cylinder</span>
+              <span class="cyl-val" id="infoCurrentCyl">—</span>
+            </div>
+            <div class="cyl-info-item">
+              <span class="cyl-label">Step</span>
+              <span class="cyl-val" id="infoStep">—</span>
+            </div>
+            <div class="cyl-info-item">
+              <span class="cyl-label">Seek Distance</span>
+              <span class="cyl-val" id="infoSeek">—</span>
+            </div>
+            <div class="cyl-info-item">
+              <span class="cyl-label">Remaining</span>
+              <span class="cyl-val" id="infoRemaining">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COMPARISON ===== -->
+  <section id="compare" class="section section-grey">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Performance</div>
+        <h2 class="section-title">Algorithm Comparison</h2>
+        <p class="section-subtitle">Compare all algorithms side-by-side for the same request queue. See which one minimizes seek time best.</p>
+      </div>
+      <div class="compare-layout" id="compareLayout">
+        <div class="compare-placeholder">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <p>Click <strong>Compare All</strong> in the simulator to see a full comparison chart.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LEARN ===== -->
+  <section id="learn" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Study Guide</div>
+        <h2 class="section-title">Learn Disk Scheduling</h2>
+        <p class="section-subtitle">A complete reference for your OS exam — concepts, formulas, and comparisons explained simply.</p>
+      </div>
+      <div class="learn-tabs">
+        <button class="tab-btn active" data-tab="concepts" onclick="switchTab(this,'concepts')">Core Concepts</button>
+        <button class="tab-btn" data-tab="formulas" onclick="switchTab(this,'formulas')">Formulas</button>
+        <button class="tab-btn" data-tab="comparison" onclick="switchTab(this,'comparison')">When to Use</button>
+        <button class="tab-btn" data-tab="exam" onclick="switchTab(this,'exam')">Exam Tips</button>
+      </div>
+      <div class="tab-content" id="tab-concepts">
+        <div class="learn-grid">
+          <div class="learn-card">
+            <h3>What is Disk Scheduling?</h3>
+            <p>Disk scheduling is the process of ordering a queue of I/O requests to the disk drive. Since disk access time consists of <strong>seek time</strong>, <strong>rotational latency</strong>, and <strong>transfer time</strong>, minimizing seek time is the key goal.</p>
+            <div class="learn-note">
+              <strong>Total Access Time</strong> = Seek Time + Rotational Latency + Transfer Time
+            </div>
+          </div>
+          <div class="learn-card">
+            <h3>Key Terms</h3>
+            <ul class="learn-list">
+              <li><strong>Cylinder:</strong> Concentric track on the disk platter — numbered 0 to N.</li>
+              <li><strong>Head:</strong> Read/write head that physically moves across tracks.</li>
+              <li><strong>Seek Time:</strong> Time for head to move to the target track.</li>
+              <li><strong>Request Queue:</strong> List of pending cylinder access requests.</li>
+              <li><strong>Seek Distance:</strong> Number of cylinders the head must traverse.</li>
+            </ul>
+          </div>
+          <div class="learn-card">
+            <h3>Why Does Scheduling Matter?</h3>
+            <p>Without scheduling, the disk head may jump wildly across cylinders, wasting time. Good algorithms reduce the total head movement, improving throughput, reducing latency, and preventing starvation of requests.</p>
+          </div>
+          <div class="learn-card">
+            <h3>FCFS — First Come First Serve</h3>
+            <p>Requests are serviced in the order they arrive. Simple to implement but may result in high seek times. No starvation occurs since every request is guaranteed service.</p>
+            <div class="algo-trace">Example: Head=53, Queue=[98,183,37,122,14,124,65,67]<br/>Order: 53→98→183→37→122→14→124→65→67<br/>Total: <strong>640</strong></div>
+          </div>
+          <div class="learn-card">
+            <h3>SSTF — Shortest Seek Time First</h3>
+            <p>Always services the nearest pending request. Reduces overall seek time significantly compared to FCFS. However, <strong>starvation</strong> is possible for far-away requests if nearby ones keep arriving.</p>
+            <div class="algo-trace">Example: Head=53, Queue=[98,183,37,122,14,124,65,67]<br/>Order: 53→65→67→37→14→98→122→124→183<br/>Total: <strong>236</strong></div>
+          </div>
+          <div class="learn-card">
+            <h3>SCAN — Elevator Algorithm</h3>
+            <p>Head moves in one direction servicing all requests, reaches the end, then reverses. Like an elevator. <strong>No starvation</strong>. Provides a more uniform wait time than SSTF.</p>
+          </div>
+          <div class="learn-card">
+            <h3>C-SCAN — Circular SCAN</h3>
+            <p>Like SCAN but after reaching one end, the head jumps back to the beginning (cylinder 0) without servicing requests on the return trip. Provides a more <strong>uniform wait time</strong> than SCAN.</p>
+          </div>
+          <div class="learn-card">
+            <h3>LOOK & C-LOOK</h3>
+            <p><strong>LOOK</strong> is like SCAN but the head only goes as far as the last request in each direction instead of going all the way to the disk boundary. <strong>C-LOOK</strong> applies the same optimization to C-SCAN. Both are more efficient than their SCAN counterparts.</p>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content hidden" id="tab-formulas">
+        <div class="formulas-grid">
+          <div class="formula-card">
+            <div class="formula-name">Total Seek Distance</div>
+            <div class="formula-eq">∑ |cylinder[i] - cylinder[i-1]| for i = 1 to n</div>
+            <div class="formula-desc">Sum of absolute differences between consecutive cylinder positions in service order.</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">Average Seek Distance</div>
+            <div class="formula-eq">Total Seek Distance ÷ Number of Requests</div>
+            <div class="formula-desc">Average cylinders traversed per request service.</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">Seek Time</div>
+            <div class="formula-eq">Seek Time = k × |destination − current|</div>
+            <div class="formula-desc">Where k is time per cylinder movement (ms/cylinder).</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">SSTF Distance</div>
+            <div class="formula-eq">min( |head − r| ) ∀ r ∈ queue</div>
+            <div class="formula-desc">At each step, choose the request with minimum seek distance from current head.</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">SCAN — Effective Range</div>
+            <div class="formula-eq">Range = [0, maxCylinder] in each sweep</div>
+            <div class="formula-desc">Head traverses full disk length in each direction before reversing.</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">LOOK — Effective Range</div>
+            <div class="formula-eq">Range = [min(requests), max(requests)]</div>
+            <div class="formula-desc">Head only goes as far as the extreme requests in each direction.</div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content hidden" id="tab-comparison">
+        <div class="comparison-table-wrap">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Algorithm</th>
+                <th>Starvation</th>
+                <th>Efficiency</th>
+                <th>Complexity</th>
+                <th>Best For</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="algo-tag fcfs-tag">FCFS</span></td>
+                <td><span class="badge-no">None</span></td>
+                <td><span class="eff-bar"><span style="width:30%"></span></span> Low</td>
+                <td>O(n)</td>
+                <td>Simple systems, low load</td>
+              </tr>
+              <tr>
+                <td><span class="algo-tag sstf-tag">SSTF</span></td>
+                <td><span class="badge-yes">Possible</span></td>
+                <td><span class="eff-bar"><span style="width:70%"></span></span> High</td>
+                <td>O(n²)</td>
+                <td>Moderate load, no starvation concern</td>
+              </tr>
+              <tr>
+                <td><span class="algo-tag scan-tag">SCAN</span></td>
+                <td><span class="badge-no">None</span></td>
+                <td><span class="eff-bar"><span style="width:65%"></span></span> Good</td>
+                <td>O(n log n)</td>
+                <td>Heavy load, uniform service</td>
+              </tr>
+              <tr>
+                <td><span class="algo-tag cscan-tag">C-SCAN</span></td>
+                <td><span class="badge-no">None</span></td>
+                <td><span class="eff-bar"><span style="width:70%"></span></span> Good</td>
+                <td>O(n log n)</td>
+                <td>High load, uniform wait time</td>
+              </tr>
+              <tr>
+                <td><span class="algo-tag look-tag">LOOK</span></td>
+                <td><span class="badge-no">None</span></td>
+                <td><span class="eff-bar"><span style="width:75%"></span></span> Better</td>
+                <td>O(n log n)</td>
+                <td>Heavy load, efficiency-focused</td>
+              </tr>
+              <tr>
+                <td><span class="algo-tag clook-tag">C-LOOK</span></td>
+                <td><span class="badge-no">None</span></td>
+                <td><span class="eff-bar"><span style="width:80%"></span></span> Best</td>
+                <td>O(n log n)</td>
+                <td>High load, best uniformity</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-content hidden" id="tab-exam">
+        <div class="exam-grid">
+          <div class="exam-card tip">
+            <div class="exam-icon">💡</div>
+            <h4>Remember the Order</h4>
+            <p>For efficiency ranking (same queue): <strong>C-LOOK ≥ LOOK ≥ C-SCAN ≥ SCAN ≥ SSTF ≥ FCFS</strong> (roughly). This depends heavily on the request distribution.</p>
+          </div>
+          <div class="exam-card tip">
+            <div class="exam-icon">📝</div>
+            <h4>SCAN vs LOOK</h4>
+            <p>SCAN goes all the way to cylinder 0 or maxCylinder. LOOK only goes as far as the last pending request. LOOK is therefore more efficient than SCAN in most cases.</p>
+          </div>
+          <div class="exam-card tip">
+            <div class="exam-icon">⚠️</div>
+            <h4>Starvation in SSTF</h4>
+            <p>SSTF can cause starvation because requests far from the current head position may never be served if there are always closer requests arriving. Mentioned frequently in exams.</p>
+          </div>
+          <div class="exam-card tip">
+            <div class="exam-icon">🔄</div>
+            <h4>C-SCAN Jump</h4>
+            <p>In C-SCAN, after reaching the end (max cylinder), the head jumps directly back to cylinder 0 <strong>without</strong> servicing any requests on the return trip. This jump counts in seek distance!</p>
+          </div>
+          <div class="exam-card tip">
+            <div class="exam-icon">🎯</div>
+            <h4>FCFS — No Optimization</h4>
+            <p>FCFS is the simplest algorithm. It does not reorder requests at all. It is used as a baseline to compare other algorithms. High seek time but absolutely fair.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="section section-grey">
+    <div class="container">
+      <div class="about-layout">
+        <div class="about-content">
+          <div class="section-badge">About This Project</div>
+          <h2 class="section-title" style="text-align:left; margin-bottom: 1rem;">DiskOS Visualizer</h2>
+          <p class="about-desc">This interactive tool was built as a 2nd-year CSE Operating Systems project to help students understand disk scheduling algorithms through visual, hands-on exploration. Instead of memorizing dry formulas, students can <em>see</em> how each algorithm works.</p>
+          <p class="about-desc">Every algorithm is implemented with correct OS textbook logic — the same implementations used in GATE preparation and university exams.</p>
+          <div class="about-tech">
+            <div class="tech-badge">HTML5 Canvas</div>
+            <div class="tech-badge">Vanilla JavaScript</div>
+            <div class="tech-badge">CSS3 Animations</div>
+            <div class="tech-badge">Responsive Design</div>
+          </div>
+          <div class="about-links">
+            <a href="#simulator" class="btn btn-primary">Try the Simulator</a>
+            <a href="#algorithms" class="btn btn-outline">View Algorithms</a>
+          </div>
+        </div>
+        <div class="about-stats-wrap">
+          <div class="about-stat-card">
+            <div class="asc-icon" style="background:#EFF6FF;color:#2563EB;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="asc-num">6</div>
+            <div class="asc-label">Algorithms Implemented</div>
+          </div>
+          <div class="about-stat-card">
+            <div class="asc-icon" style="background:#ECFEFF;color:#06B6D4;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="asc-num">∞</div>
+            <div class="asc-label">Custom Request Queues</div>
+          </div>
+          <div class="about-stat-card">
+            <div class="asc-icon" style="background:#F0FDF4;color:#16A34A;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="asc-num">100%</div>
+            <div class="asc-label">Client-side, No Server</div>
+          </div>
+          <div class="about-stat-card">
+            <div class="asc-icon" style="background:#FFF7ED;color:#EA580C;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="asc-num">Live</div>
+            <div class="asc-label">Canvas Animations</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-icon">
+            <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="14" stroke="#2563EB" stroke-width="2" fill="white"/>
+              <circle cx="16" cy="16" r="9" stroke="#2563EB" stroke-width="1.5" fill="none"/>
+              <circle cx="16" cy="16" r="2" fill="#2563EB"/>
+              <line x1="16" y1="16" x2="28" y2="10" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="28" cy="10" r="2" fill="#06B6D4"/>
+            </svg>
+          </div>
+          <span class="logo-text">Disk<span class="logo-accent">OS</span></span>
+        </div>
+        <p class="footer-tagline">Disk Scheduling Algorithm Visualizer<br/>CSE Operating Systems Project</p>
+      </div>
+      <div class="footer-nav">
+        <a href="#home" class="footer-link">Home</a>
+        <a href="#algorithms" class="footer-link">Algorithms</a>
+        <a href="#simulator" class="footer-link">Simulator</a>
+        <a href="#compare" class="footer-link">Compare</a>
+        <a href="#learn" class="footer-link">Learn</a>
+        <a href="#about" class="footer-link">About</a>
+      </div>
+      <div class="footer-copy">
+        <p>Built with ❤️ for OS Lab · 2nd Year CSE</p>
+        <p style="color:#94A3B8; margin-top:4px;">DiskOS — Interactive Educational Tool</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Algorithm Detail Modal -->
+  <div class="modal-overlay" id="algoModal" onclick="closeModal(event)">
+    <div class="modal-box" id="modalBox">
+      <button class="modal-close" onclick="closeAlgoModal()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
